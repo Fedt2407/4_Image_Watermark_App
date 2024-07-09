@@ -93,7 +93,7 @@ entry_label.pack(pady=(10, 0))
 entry_watermark = Entry(root, width=50, highlightbackground='white', highlightthickness=1)
 entry_watermark.pack(pady=(10, 0))
 
-# Crea un frame per i pulsanti
+# Create a frame for buttons
 button_frame = Frame(root)
 button_frame.pack(pady=(10, 10))
 
