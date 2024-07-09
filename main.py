@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Entry, Canvas, Button
+from tkinter import Label, Entry, Canvas, Button, Frame, LEFT, END
 from tkinterdnd2 import DND_FILES, TkinterDnD
 from PIL import Image, ImageDraw, ImageFont, ImageTk
 import os
@@ -16,7 +16,7 @@ def on_drop(event):
         imgTk = ImageTk.PhotoImage(img)
         canvas.create_image(20, 20, anchor="nw", image=imgTk)
         canvas.image = imgTk
-        # status_label.config(text="Image loaded successfully.", fg="green")
+        status_label.config(text="Image loaded successfully.", fg="green")
     except Exception as e:
         status_label.config(text=f"Error loading image: {e}", fg="red")
 
@@ -49,6 +49,15 @@ def save_image_with_watermark(image):
     except Exception as e:
         status_label.config(text=f"Error saving image: {e}", fg="red")
 
+def clear_window():
+    global img, imgTk, original_img
+    canvas.delete("all")
+    entry_watermark.delete(0, END)
+    status_label.config(text="")
+    img = None
+    imgTk = None
+    original_img = None
+
 root = TkinterDnD.Tk()
 root.title("Apply Watermark to Image")
 root.geometry("800x600")
@@ -78,8 +87,16 @@ entry_label.pack(pady=(10, 0))
 entry_watermark = Entry(root, width=50, highlightbackground='white', highlightthickness=1)
 entry_watermark.pack(pady=(10, 0))
 
+# Crea un frame per i pulsanti
+button_frame = Frame(root)
+button_frame.pack(pady=(10, 10))
+
 # Apply watermark button
-button_applica = Button(root, text="Apply Watermark", command=apply_watermark, width=30, height=2)
-button_applica.pack(pady=(10, 10))
+button_apply = Button(button_frame, text="Apply Watermark", command=apply_watermark, width=27, height=2)
+button_apply.pack(side=LEFT, padx=(5, 5))
+
+# Clear button
+button_clear = Button(button_frame, text="Clear Window", command=clear_window, width=15, height=2)
+button_clear.pack(side=LEFT, padx=(5, 5))
 
 root.mainloop()
