@@ -14,7 +14,7 @@ def on_drop(event):
         original_img = Image.open(file_path)
         img = original_img.copy()
         imgTk = ImageTk.PhotoImage(img)
-        canvas.create_image(20, 20, anchor="nw", image=imgTk)
+        canvas.create_image(20, 20, anchor="nw", image=imgTk, tags="loaded_image")
         canvas.image = imgTk
         status_label.config(text="Image loaded successfully.", fg="green")
     except Exception as e:
@@ -36,7 +36,7 @@ def apply_watermark():
 
     drawing.text((10, 10), watermark_text, fill=(255, 255, 255), font=font)
     imgTk = ImageTk.PhotoImage(img)
-    canvas.create_image(20, 20, anchor="nw", image=imgTk)
+    canvas.create_image(20, 20, anchor="nw", image=imgTk, tags="wartermarked_image")
     canvas.image = imgTk
     save_image_with_watermark(img)
 
@@ -51,7 +51,8 @@ def save_image_with_watermark(image):
 
 def clear_window():
     global img, imgTk, original_img
-    canvas.delete("all")
+    canvas.delete("loaded_image")
+    canvas.delete("wartermarked_image")
     entry_watermark.delete(0, END)
     status_label.config(text="")
     img = None
@@ -74,7 +75,7 @@ icon_image = Image.open(icon_path)
 icon_photo = ImageTk.PhotoImage(icon_image)
 
 icon_x = 400 
-icon_y = 240
+icon_y = 230
 canvas.create_image(icon_x, icon_y, image=icon_photo)
 
 # Status label
@@ -92,7 +93,7 @@ button_frame = Frame(root)
 button_frame.pack(pady=(10, 10))
 
 # Apply watermark button
-button_apply = Button(button_frame, text="Apply Watermark", command=apply_watermark, width=27, height=2)
+button_apply = Button(button_frame, text="Apply Watermark", command=apply_watermark, width=25, height=2)
 button_apply.pack(side=LEFT, padx=(5, 5))
 
 # Clear button
