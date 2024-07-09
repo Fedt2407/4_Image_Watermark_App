@@ -3,6 +3,7 @@ from tkinterdnd2 import DND_FILES, TkinterDnD
 from PIL import Image, ImageDraw, ImageFont, ImageTk
 import os
 
+
 def on_drop(event):
     global img, imgTk, original_img
     file_path = event.data.strip()
@@ -19,6 +20,7 @@ def on_drop(event):
         status_label.config(text="Image loaded successfully.", fg="green")
     except Exception as e:
         status_label.config(text=f"Error loading image: {e}", fg="red")
+
 
 def apply_watermark():
     global img, imgTk, original_img
@@ -40,6 +42,7 @@ def apply_watermark():
     canvas.image = imgTk
     save_image_with_watermark(img)
 
+
 def save_image_with_watermark(image):
     downloads_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads') if os.name == 'nt' else os.path.join(os.path.expanduser('~'), 'Downloads')
     output_path = os.path.join(downloads_path, "watermarked_image.png")
@@ -48,6 +51,7 @@ def save_image_with_watermark(image):
         status_label.config(text=f"Image saved to {output_path}", fg="green")
     except Exception as e:
         status_label.config(text=f"Error saving image: {e}", fg="red")
+
 
 def clear_window():
     global img, imgTk, original_img
@@ -58,6 +62,7 @@ def clear_window():
     img = None
     imgTk = None
     original_img = None
+
 
 root = TkinterDnD.Tk()
 root.title("Apply Watermark to Image")
